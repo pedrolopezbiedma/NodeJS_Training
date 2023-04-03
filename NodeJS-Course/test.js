@@ -1,3 +1,6 @@
-const name = 'Pedro';
+const consolePrint = (name) => {
+    console.log('This is the name', name);
+}
 
-console.log(name);
+consolePrint('Pedro');
+consolePrint('Mario');
