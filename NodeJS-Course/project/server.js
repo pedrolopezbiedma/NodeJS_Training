@@ -9,14 +9,38 @@ const server = http.createServer((request, response) => {
     // Set Headers Content Type
     response.setHeader('Content-Type', 'text/html')
 
-    // Sending HTML File
-    fs.readFile('./views/index.html', (error, data) => {
+    // Sending Simple HTML File
+    // fs.readFile('./views/index.html', (error, data) => {
+    //     if (error) {
+    //         console.log('An error ocurred');
+    //     } else {
+    //         response.write(data);
+    //     }
+    //     response.end();
+    // })
+
+    // Basic Routing Example
+    let path = './views/';
+    switch (request.url) {
+        case '/':
+            path = path + 'index.html';
+            break;
+        case '/about':
+            path = path + 'about.html';
+            break;
+        default:
+            path = path + '404.html';
+            break;
+    }
+
+    fs.readFile(path, (error, data) => {
         if (error) {
-            console.log('An error ocurred');
+            console.log('An error ocurred!');
+            response.end();
         } else {
             response.write(data);
+            response.end();
         }
-        response.end();
     })
 });
 
