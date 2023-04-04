@@ -2,8 +2,15 @@
 const http = require('http');
 const fs = require('fs');
 
+// Library exports
+const _ = require('lodash');
+
 const server = http.createServer((request, response) => {
-    console.log('Request received!');
+
+    // Lodash
+    const num = _.random(0, 20);
+    console.log(num)
+
     console.log(request.url, request.method)
 
     // Set Headers Content Type
