@@ -10,5 +10,10 @@ app.listen(3000, () => {
 
 // Listening for Requests
 app.get('/', (request, response) => {
-    response.send('<p>Head file</p>')
+    // response.send('<p>Home page</p>')
+    response.sendFile('/views/index.html', { root: __dirname })
+})
+
+app.get('/about', (request, response) => {
+    response.sendFile('/views/about.html', { root: __dirname })
 })
