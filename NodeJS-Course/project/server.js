@@ -24,12 +24,19 @@ const server = http.createServer((request, response) => {
     switch (request.url) {
         case '/':
             path = path + 'index.html';
+            response.statusCode = 200;
             break;
         case '/about':
             path = path + 'about.html';
+            response.statusCode = 200;
+            break;
+        case '/about-me':
+            response.setHeader('Location', '/about');
+            response.statusCode = 301;
             break;
         default:
             path = path + '404.html';
+            response.statusCode = 404;
             break;
     }
 
