@@ -52,11 +52,11 @@ const fileSystem = require('fs');
 // }
 
 // Deleting files.
-if (fileSystem.existsSync('./docs/deleteme.txt')) {
-    fileSystem.unlink('./docs/deleteme.txt', (error, data) => {
-        if (error) {
-            console.log(error)
-        }
-        console.log('File removed')
-    })
-}
+// if (fileSystem.existsSync('./docs/deleteme.txt')) {
+//     fileSystem.unlink('./docs/deleteme.txt', (error, data) => {
+//         if (error) {
+//             console.log(error)
+//         }
+//         console.log('File removed')
+//     })
+// }
