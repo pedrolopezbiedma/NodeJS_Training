@@ -1,4 +1,5 @@
-const express = require('express');
+const express = require('express')
+const morgan = require('morgan')
 
 // Creating the Express App
 const app = express();
@@ -10,6 +11,10 @@ app.set('view engine', 'ejs');
 app.listen(3000, () => {
     console.log('Listening for requests in http://localhost:3000/');
 })
+
+// Middleware && Static files
+app.use(morgan('dev'))
+app.use(express.static('public'));
 
 // Listening for Requests
 app.get('/', (request, response) => {
