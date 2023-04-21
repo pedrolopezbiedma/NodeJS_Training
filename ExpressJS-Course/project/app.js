@@ -15,20 +15,25 @@ app.listen(3000, () => {
 app.get('/', (request, response) => {
     // response.send('<p>Home page</p>')
     // response.sendFile('/views/index.html', { root: __dirname })
-    response.render('index')
+    const blogs = [
+        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+        {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+        {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+    ];
+    response.render('index', { title: 'Home', blogs })
 })
 
 app.get('/about', (request, response) => {
     // response.sendFile('/views/about.html', { root: __dirname })
-    response.render('about')
+    response.render('about', { title: 'About'})
 })
 
 app.get('/blogs/create', (request, response) => {
-    response.render('create')
+    response.render('create', { title: 'Create a New Blog'})
 })
 
 // 404 Page
 app.use((request, response) => {
     // response.status(404).sendFile('/views/404.html', { root: __dirname })
-    response.status(404).render('404')
+    response.status(404).render('404', { title: '404'})
 })
