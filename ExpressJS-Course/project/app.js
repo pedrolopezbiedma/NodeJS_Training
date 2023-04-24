@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const mongoose = require('mongoose');
 
 // Creating the Express App
 const app = express();
@@ -7,14 +8,22 @@ const app = express();
 // Register the view engine
 app.set('view engine', 'ejs');
 
-// Running the app
-app.listen(3000, () => {
-    console.log('Listening for requests in http://localhost:3000/');
-})
-
 // Middleware && Static files
 app.use(morgan('dev'))
 app.use(express.static('public'));
+
+// Connect to MongoDB
+const dbURI = 'mongodb+srv://pedrol:test1234@nodejs-cluster.fvghcpj.mongodb.net/NodeJS-Database?retryWrites=true&w=majority';
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('Connected to db')
+        // Listening for requests in the app
+        app.listen(3000, () => {
+            console.log('Listening for requests in http://localhost:3000/');
+        })
+    })
+    .catch((error) => console.log('Error while connecting to the db: ', error));
+
 
 // Listening for Requests
 app.get('/', (request, response) => {
