@@ -13,4 +13,4 @@ const blogSchema = new Schema({
 // It will lowercase + pluralize it and search for that in the database collections, so in this case, 'blogs'
 const BlogModel = mongoose.model('Blog', blogSchema) 
 
-module.exports = Blog;
+module.exports = BlogModel;
