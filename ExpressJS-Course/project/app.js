@@ -51,21 +51,7 @@ app.use((request, response) => {
     response.status(404).render('404', { title: '404'})
 })
 
-// Lesson 11 - Express Router
-// Creamos una carpeta que se llame routes, y dentro un blogRoutes.js
-// Cambiamos los routes handlers al router que le pedimos a express en el archivo.
-// Exportamos el router y lo importamos en la app como blogRoutes
-// Le decimos a nuestra app que use los blogRoutes
-// Limpiamos lo que tengamos que limpiar del app.js
-// Actualizamos las rutas al especificar el comienzo de ruta en el uso de blogRoutes
-
 // Lesson 11 - Controllers
-// Creamos una carpeta controllers y un archivo que se llame blogController.js
-// Creamos las funciones blog_index, blog_details, blog_create_get, blog_create_post, blog_DEtele
-// Vamos a mover primero el codigo de la primera funcion
-// Exportamos la funcion y la importamos en nuestra app y actualizamos nuestra ruta.
-// Hacemos lo mismo con about
-
 // Movemos las rutas de blogs a una nueva carpeta que se llama 'blogs' y actualizamos las rutas si queremos.
 
 // Lesson 12 - Wrap up

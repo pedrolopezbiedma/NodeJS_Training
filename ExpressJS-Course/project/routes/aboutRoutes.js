@@ -1,12 +1,10 @@
 // Dependencies
 const express = require('express');
+const aboutController = require('../controllers/aboutController')
 
 // Router
 const router = express.Router();
 
-router.get('/', (request, response) => {
-    // response.sendFile('/views/about.html', { root: __dirname })
-    response.render('about', { title: 'About'})
-})
+router.get('/', aboutController.about_index)
 
 module.exports = router;
