@@ -4,7 +4,7 @@ const BlogModel = require('../models/blog');
 const all_blogs = (request, response) => {
     BlogModel.find().sort({ createdAt: -1 })
         .then((blogs) => {
-            response.render('index', { title: 'All Blogs', blogs })
+            response.render('./blogs/index', { title: 'All Blogs', blogs })
         })
         .catch((error) => {
             response.send('The error getting all the blogs is ->', error)
@@ -15,7 +15,7 @@ const blog_details = (request, response) => {
     const blogId = request.params.id
     BlogModel.findById(blogId)
         .then((blog) => {
-            response.render('details', { title: 'Blog details', blog })
+            response.render('./blogs/details', { title: 'Blog details', blog })
         })
         .catch((error) => {
             response.send('The error getting one blog by id was -> ', error);
@@ -23,7 +23,7 @@ const blog_details = (request, response) => {
 }
 
 const blog_create_get = (request, response) => {
-    response.render('create', { title: 'Create a New Blog'})
+    response.render('./blogs/create', { title: 'Create a New Blog'})
 }
 
 const blog_create_post = (request, response) => {
