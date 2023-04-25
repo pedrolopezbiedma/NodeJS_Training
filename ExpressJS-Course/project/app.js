@@ -1,3 +1,4 @@
+// Dependencies
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose');
@@ -25,43 +26,6 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
         })
     })
     .catch((error) => console.log('Error while connecting to the db: ', error));
-
-// MongoDB & Mongoose sandbox
-// app.get('/create-dummy-blog', (request, response) => {
-//     const newBlog = new BlogModel({
-//         title: 'A brand new blog 2',
-//         snippet: 'This is my new blog',
-//         body: "Look how cool is my blog dude!"
-//     });
-
-//     newBlog.save()
-//         .then((newBlog) => {
-//             response.send(newBlog)
-//         })
-//         .catch((error) => {
-//             console.log('The error saving the blog is -> ', error)
-//         })
-// })
-
-// app.get('/all-blogs', (request, response) => {
-//     BlogModel.find()
-//         .then((blogs) => {
-//             response.send(blogs)
-//         })
-//         .catch((error) => {
-//             console.log('The error getting all the blogs is -> ', error)
-//         })
-// })
-
-// app.get('/get-blog', (request, response) => {
-//     BlogModel.findById('6446e9c565299c69bba94b4d')
-//         .then((blog) => {
-//             response.send(blog)
-//         })
-//         .catch((error) => {
-//             console.log('The error getting a fix blog is -> ', error)
-//         })
-// })
 
 // Listening for Requests
 app.get('/', (request, response) => {
@@ -98,6 +62,17 @@ app.post('/blogs', (request, response) => {
         })
         .catch((error) => {
             response.send('The error saving the new blog was -> ', error);
+        })
+})
+
+app.get('/blogs/:id', (request, response) => {
+    const blogId = request.params.id
+    BlogModel.findById(blogId)
+        .then((blog) => {
+            response.render('details', { title: 'Blog details', blog })
+        })
+        .catch((error) => {
+            response.send('The error getting one blog by id was -> ', error);
         })
 })
 
