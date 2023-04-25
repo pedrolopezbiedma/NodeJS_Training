@@ -10,8 +10,9 @@ const app = express();
 app.set('view engine', 'ejs');
 
 // Middleware && Static files
-app.use(morgan('dev'))
-app.use(express.static('public'));
+app.use(morgan('dev')) // Logger middleware
+app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
+app.use(express.static('public')); // Use folder as static to use CSS & Images
 
 // Connect to MongoDB
 const dbURI = 'mongodb+srv://pedrol:test1234@nodejs-cluster.fvghcpj.mongodb.net/NodeJS-Database?retryWrites=true&w=majority';
@@ -87,6 +88,16 @@ app.get('/blogs', (request, response) => {
         })
         .catch((error) => {
             response.send('The error getting all the blogs is ->', error)
+        })
+})
+
+app.post('/blogs', (request, response) => {
+    const newBlog = new BlogModel(request.body).save()
+        .then((result) => {
+            response.redirect('/blogs')
+        })
+        .catch((error) => {
+            response.send('The error saving the new blog was -> ', error);
         })
 })
 
