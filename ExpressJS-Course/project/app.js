@@ -76,6 +76,18 @@ app.get('/blogs/:id', (request, response) => {
         })
 })
 
+app.delete('/blogs/:id', (request, response) => {
+    const blogId = request.params.id
+    BlogModel.findByIdAndDelete(blogId)
+        .then((result) => {
+            response.json({ redirect: '/blogs' })
+        })
+        .catch((error) => {
+            response.send('The error deleting one blog was -> ', error);
+        })
+
+})
+
 app.get('/blogs/create', (request, response) => {
     response.render('create', { title: 'Create a New Blog'})
 })
