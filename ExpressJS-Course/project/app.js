@@ -51,8 +51,5 @@ app.use((request, response) => {
     response.status(404).render('404', { title: '404'})
 })
 
-// Lesson 11 - Controllers
-// Movemos las rutas de blogs a una nueva carpeta que se llama 'blogs' y actualizamos las rutas si queremos.
-
 // Lesson 12 - Wrap up
 // Cambiar el delete de borrar por el trashcan
