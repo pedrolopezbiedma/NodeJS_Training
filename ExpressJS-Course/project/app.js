@@ -1,21 +1,14 @@
 // Dependencies
 const express = require('express')
 const morgan = require('morgan')
-const mongoose = require('mongoose');
-const BlogModel = require('./models/blog');
+const mongoose = require('mongoose')
+const blogRoutes = require('./routes/blogRoutes')
+const aboutRoutes = require('./routes/aboutRoutes');
 
 // Creating the Express App
 const app = express();
 
-// Register the view engine
-app.set('view engine', 'ejs');
-
-// Middleware && Static files
-app.use(morgan('dev')) // Logger middleware
-app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
-app.use(express.static('public')); // Use folder as static to use CSS & Images
-
-// Connect to MongoDB
+// Connecting to MongoDB
 const dbURI = 'mongodb+srv://pedrol:test1234@nodejs-cluster.fvghcpj.mongodb.net/NodeJS-Database?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -26,6 +19,16 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
         })
     })
     .catch((error) => console.log('Error while connecting to the db: ', error));
+
+// Register the view engine
+app.set('view engine', 'ejs');
+
+// Middleware
+app.use(morgan('dev')) // Logger middleware
+app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
+
+// Static files
+app.use(express.static('public')); // Use folder as static to use CSS & Images
 
 // Listening for Requests
 app.get('/', (request, response) => {
@@ -39,61 +42,31 @@ app.get('/', (request, response) => {
     // response.render('index', { title: 'Home', blogs })
     response.redirect('/blogs');
 })
-
-app.get('/about', (request, response) => {
-    // response.sendFile('/views/about.html', { root: __dirname })
-    response.render('about', { title: 'About'})
-})
-
-app.get('/blogs', (request, response) => {
-    BlogModel.find().sort({ createdAt: -1 })
-        .then((blogs) => {
-            response.render('index', { title: 'All Blogs', blogs })
-        })
-        .catch((error) => {
-            response.send('The error getting all the blogs is ->', error)
-        })
-})
-
-app.post('/blogs', (request, response) => {
-    const newBlog = new BlogModel(request.body).save()
-        .then((result) => {
-            response.redirect('/blogs')
-        })
-        .catch((error) => {
-            response.send('The error saving the new blog was -> ', error);
-        })
-})
-
-app.get('/blogs/:id', (request, response) => {
-    const blogId = request.params.id
-    BlogModel.findById(blogId)
-        .then((blog) => {
-            response.render('details', { title: 'Blog details', blog })
-        })
-        .catch((error) => {
-            response.send('The error getting one blog by id was -> ', error);
-        })
-})
-
-app.delete('/blogs/:id', (request, response) => {
-    const blogId = request.params.id
-    BlogModel.findByIdAndDelete(blogId)
-        .then((result) => {
-            response.json({ redirect: '/blogs' })
-        })
-        .catch((error) => {
-            response.send('The error deleting one blog was -> ', error);
-        })
-
-})
-
-app.get('/blogs/create', (request, response) => {
-    response.render('create', { title: 'Create a New Blog'})
-})
+app.use('/blogs', blogRoutes);
+app.use('/about', aboutRoutes);
 
 // 404 Page
 app.use((request, response) => {
     // response.status(404).sendFile('/views/404.html', { root: __dirname })
     response.status(404).render('404', { title: '404'})
 })
+
+// Lesson 11 - Express Router
+// Creamos una carpeta que se llame routes, y dentro un blogRoutes.js
+// Cambiamos los routes handlers al router que le pedimos a express en el archivo.
+// Exportamos el router y lo importamos en la app como blogRoutes
+// Le decimos a nuestra app que use los blogRoutes
+// Limpiamos lo que tengamos que limpiar del app.js
+// Actualizamos las rutas al especificar el comienzo de ruta en el uso de blogRoutes
+
+// Lesson 11 - Controllers
+// Creamos una carpeta controllers y un archivo que se llame blogController.js
+// Creamos las funciones blog_index, blog_details, blog_create_get, blog_create_post, blog_DEtele
+// Vamos a mover primero el codigo de la primera funcion
+// Exportamos la funcion y la importamos en nuestra app y actualizamos nuestra ruta.
+// Hacemos lo mismo con about
+
+// Movemos las rutas de blogs a una nueva carpeta que se llama 'blogs' y actualizamos las rutas si queremos.
+
+// Lesson 12 - Wrap up
+// Cambiar el delete de borrar por el trashcan
