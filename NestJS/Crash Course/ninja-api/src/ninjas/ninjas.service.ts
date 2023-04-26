@@ -20,9 +20,13 @@ export class NinjasService {
   }
 
   getNinjaById(id: string) {
-    return this.ninjas.find((ninja) => {
+    const ninja = this.ninjas.find((ninja) => {
       return ninja.id === id;
     });
+
+    if (!ninja) {
+      throw new Error('No ninja with that ID');
+    }
   }
 
   createNinja(ninjaData: CreateNinjaDto) {
